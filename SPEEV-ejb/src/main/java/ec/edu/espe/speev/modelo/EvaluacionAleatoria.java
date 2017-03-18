@@ -29,7 +29,7 @@ import javax.persistence.Table;
 public class EvaluacionAleatoria implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EVAL_ALEAT_SEQ")
     @SequenceGenerator(name = "EVAL_ALEAT_SEQ", sequenceName = "EVAL_ALEAT_SEQ", allocationSize = 1)
