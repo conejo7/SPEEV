@@ -10,21 +10,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta http-equiv="X-UA-Conpatible" content="IE=edge" />
         <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet"/>  
-        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/images/template.css" type="text/css"/>
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/images/indexStyle.css" type="text/css"/>
         <ui:insert name="css"/>
-        <title>Flash Soccer Tournaments</title> 
+        <title>SPEEV</title> 
     </h:head> 
 
     <h:body>
         <f:view>
-            <header class="cabecera row">
-                <h:form>
-                    <div class="col-2 col-m-12 wraptocenter">
-                        <p:graphicImage value="/images/logo.png" style="width: 160px; height: 145px;"/>
-                    </div>
-
-                    <ui:insert name="cabeza" />
-                </h:form>
+            <header>
+                <h:graphicImage value="images/bann_2.jpg" width="100%" height="100"/>
             </header>
 
             <main class="cuerpo row">
@@ -35,9 +29,12 @@
             </main>
 
             <footer class="pie">
-                <h3>Todos los derechos reservados</h3>
-                <p:separator />
-                <h3>Flash Soccer Tournament © 2017</h3>
+                <h:form>
+                    <p:stack icon="/images/icons/stack.png" expanded="true">
+                        <p:menuitem value="Inicio" icon="/images/icons/home.png" action="index" ajax="false"/>
+                        <p:menuitem value="Administrador" icon="/images/icons/admin.png" action="adminNuevoAsig" ajax="false"/>
+                    </p:stack>
+                </h:form>
             </footer>
         </f:view>
     </h:body>
