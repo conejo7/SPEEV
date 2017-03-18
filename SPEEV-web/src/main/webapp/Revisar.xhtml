@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>SPEEV</title>
+    </h:head>
+    <h:body>
+        <h:outputStylesheet library="css" name="globalStyle.css"  />
+        <p:layoutUnit id="content" position="center">
+            <h:graphicImage value="resources/images/bann_2.jpg" width="100%" height="100"/>
+            <h:form id="form">
+                <p:panel id="panel" header="Revisar Evaluación">
+
+                    <p:messages id="messages" closable="true"/>
+
+                    <h3>Información de la Evaluación</h3>
+
+                    <h:panelGrid columns="2" style="margin-bottom:10px;" cellpadding="5">
+                        <p:outputLabel for="docente" value="Docente Revisor:" />
+                        <h:outputText id="docente" value="#{revisarView.profesor}" />
+
+                        <p:outputLabel for="periodo" value="Período:" />
+                        <p:selectOneMenu id="periodo" value="#{revisarView.periodo}" 
+                                         var="p" converter="perioRevisar" style="width: 200px;">
+                            <f:selectItems value="#{revisarView.periodos}" var="per" itemLabel="#{per.desc}" itemValue="#{per}" />
+                            <f:ajax execute="@form" listener="#{revisarView.cargarMaterias}" render="panel" />
+                            <p:column>
+                                <h:outputText value="#{p.desc}" />
+                            </p:column>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="parcial" value="Parcial:" />         
+                        <p:selectOneMenu id="parcial" value="#{revisarView.parcial}" 
+                                         var="pa" converter="parcialRevisar" style="width: 200px;">
+                            <f:selectItems value="#{revisarView.parciales}" var="par" itemLabel="#{par.desc}" itemValue="#{par}" />
+                            <f:ajax execute="@form" listener="#{revisarView.cargarMaterias}" render="panel" />
+                            <p:column>
+                                <h:outputText value="#{pa.desc}" />
+                            </p:column>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="materia" value="Materia:" />
+                        <p:selectOneListbox id="materia" value="#{revisarView.materia}" 
+                                            var="m" converter="mateRevisar" style="width: 100%;" filter="true" filterMatchMode="contains">
+                            <f:selectItems value="#{revisarView.materias}" var="mat" itemLabel="#{mat.titulo}" itemValue="#{mat}" />
+                            <f:ajax execute="@form" listener="#{revisarView.cargarReporte}" render="messages" />
+                            <p:column>
+                                <h:outputText value="#{m.titulo}" />
+                            </p:column>
+                        </p:selectOneListbox>
+                    </h:panelGrid>
+
+                    <p:separator />
+
+                    <p:commandButton value="Continuar" 
+                                     update="panel" icon="ui-icon-check" 
+                                     action="#{revisarView.continuar}"/>
+                </p:panel>
+                <p:stack icon="/resources/icons/stack.png" expanded="true">
+                    <p:menuitem value="Inicio" icon="/resources/icons/home.png" action="index?faces-redirect=true"/>
+                </p:stack>
+            </h:form>
+        </p:layoutUnit>     
+    </h:body>
+</html>
+
+

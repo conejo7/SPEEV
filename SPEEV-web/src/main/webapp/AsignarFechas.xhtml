@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>SPEEV</title>
+    </h:head>
+    <h:body>
+        <h:outputStylesheet library="css" name="globalStyle.css"  />
+        <p:layoutUnit id="content" position="center">
+            <h:graphicImage value="resources/images/bann_2.jpg" width="100%" height="100"/>
+            <h:form id="form">
+                <p:panel id="panel" header="Asignación">
+
+                    <p:megaMenu style="margin-top:20px">
+                        <p:menuitem value="Asignar Roles" url="Asignar.xhtml" icon="ui-icon-bookmark" />
+
+                        <p:menuitem value="Fechas" url="AsignarFechas.xhtml" icon="ui-icon-calendar" />
+
+                        <p:menuitem value="Imprimir" url="#" icon="ui-icon-print" />
+
+                        <p:menuitem value="Salir" url="index.xhtml" icon="ui-icon-close" />
+                    </p:megaMenu>
+
+                    <p:messages id="messages" closable="true"/>
+
+                    <h:panelGrid columns="2" style="margin-bottom:10px;" cellpadding="5">
+                        <p:outputLabel for="rol" value="Tipo de Fecha:" />
+                        <p:selectOneMenu id="rol" value="#{asignarFechasView.tipoFecha}">
+                            <f:selectItem itemLabel="Toma" itemValue="Toma" />
+                            <f:selectItem itemLabel="Creador" itemValue="Creador" />
+                            <f:selectItem itemLabel="Revisor" itemValue="Revisor" />
+                            <f:selectItem itemLabel="Receptor" itemValue="Receptor" />
+                            <f:ajax execute="@form" listener="#{asignarFechasView.procesarFechas}" render="panel" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="periodo" value="Período:" />
+                        <p:selectOneMenu id="periodo" value="#{asignarFechasView.periodo}" 
+                                         var="p" converter="perioAsigFecha" style="width: 200px;">
+                            <f:selectItems value="#{asignarFechasView.periodos}" var="per" itemLabel="#{per.desc}" itemValue="#{per}" />
+                            <f:ajax execute="@form" listener="#{asignarFechasView.cargarMaterias}" render="panel" />
+                            <p:column>
+                                <h:outputText value="#{p.desc}" />
+                            </p:column>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="parcial" value="Parcial:" />         
+                        <p:selectOneMenu id="parcial" value="#{asignarFechasView.parcial}" 
+                                         var="pa" converter="parcialAsigFecha" style="width: 200px;">
+                            <f:selectItems value="#{asignarFechasView.parciales}" var="par" itemLabel="#{par.desc}" itemValue="#{par}" />
+                            <f:ajax execute="@form" listener="#{asignarFechasView.cargarMaterias}" render="panel" />
+                            <p:column>
+                                <h:outputText value="#{pa.desc}" />
+                            </p:column>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="materia" value="Materia:" />
+                        <p:selectOneListbox id="materia" value="#{asignarFechasView.materia}" 
+                                            var="m" converter="mateAsigFecha" style="width: 100%;" filter="true" filterMatchMode="contains">
+                            <f:selectItems value="#{asignarFechasView.materias}" var="mat" itemLabel="#{mat.titulo}" itemValue="#{mat}" />
+                            <f:ajax execute="@form" listener="#{asignarFechasView.procesarFechas}" render="messages datetime" />
+                            <p:column>
+                                <h:outputText value="#{m.titulo}" />
+                            </p:column>
+                        </p:selectOneListbox>
+                    </h:panelGrid>
+
+                    <p:outputLabel for="datetime" value="Fecha y Hora: " />
+                    <p:calendar id="datetime" value="#{asignarFechasView.date}" pattern="dd/MMM/yyyy HH:mm" />
+
+                    <p:separator />
+
+                    <p:commandButton value="Aceptar" update="display" icon="ui-icon-check" oncomplete="PF('dlg').show()"/>
+
+                    <p:dialog modal="true" resizable="false" widgetVar="dlg" header="Reporte" showEffect="clip">
+                        <p:panelGrid columns="2" id="display" columnClasses="label,value">
+                            <h:outputText value="Tipo de Fecha:" />
+                            <h:outputText value="#{asignarFechasView.tipoFecha}" />
+                            <h:outputText value="Fecha:" />
+                            <h:outputText value="#{asignarFechasView.date}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                            </h:outputText>
+                        </p:panelGrid>
+                        <p:commandButton value="Confirmar" 
+                                         update="panel" icon="ui-icon-check" 
+                                         action="#{asignarFechasView.guardarFecha}"/>
+                        <p:commandButton update="panel" process="@this" icon="ui-icon-close" 
+                                         actionListener="#{asignarFechasView.reset}"
+                                         value="Cancelar"/>
+                    </p:dialog>
+                </p:panel>
+                <p:stack icon="/resources/icons/stack.png" expanded="true">
+                    <p:menuitem value="Inicio" icon="/resources/icons/home.png" action="index?faces-redirect=true"/>
+                </p:stack>
+            </h:form>
+        </p:layoutUnit>
+    </h:body>
+</html>
+

@@ -63,7 +63,7 @@ public class DefaultGenericDAOImple<T, ID extends Serializable> implements
     /**
      * Objeto que maneja las operaciones de persistencia.
      */
-    @PersistenceContext(name = "java:/jdbc/speev")
+    @PersistenceContext(name = "speevPU")
     private EntityManager em;
 
     /**

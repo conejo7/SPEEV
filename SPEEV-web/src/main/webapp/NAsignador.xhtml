@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>SPEEV</title>
+    </h:head>
+    <h:body>
+        <h:outputStylesheet library="css" name="globalStyle.css"  />
+        <p:layoutUnit id="content" position="center">
+            <h:graphicImage value="resources/images/bann_2.jpg" width="100%" height="100"/>
+            <h:form id="form">
+                <p:panel id="panel" header="Administrador">
+                    <p:megaMenu style="margin-top:20px">
+                        <p:menuitem value="Nuevo Asignador" url="NAsignador.xhtml" icon="ui-icon-bookmark" />
+
+                        <p:menuitem value="Nuevo Administrador" url="NAdmin.xhtml" icon="ui-icon-person" />
+
+                        <p:submenu label="Configuraciones" icon="ui-icon-wrench">
+
+                            <p:column>
+                                <p:submenu label="Estados">
+                                    <p:menuitem value="Evaluación" url="EstadoEval.xhtml" />
+                                    <p:menuitem value="Preguntas" url="EstadoPreg.xhtml" />
+                                </p:submenu>
+                                <p:submenu label="Otros">
+                                    <p:menuitem value="Parciales" url="Parciales.xhtml" />
+                                    <p:menuitem value="Presentación" url="Presentacion.xhtml" />
+                                </p:submenu>
+                            </p:column>
+                        </p:submenu>
+
+                        <p:menuitem value="Salir" url="index.xhtml" icon="ui-icon-close" />
+                    </p:megaMenu>
+
+                    <p:messages id="messages" closable="true"/>
+
+                    <h3>Selección del rol asignador</h3>
+
+                    <h:panelGrid columns="2" style="margin-bottom:10px;" cellpadding="5">                      
+                        <p:outputLabel for="periodo" value="Período:" />
+                        <p:selectOneMenu id="periodo" value="#{nAsignadorView.periodo}" 
+                                         var="p" converter="perioNAsig" style="width: 200px;">
+                            <f:selectItems value="#{nAsignadorView.periodos}" var="per" itemLabel="#{per.desc}" itemValue="#{per}" />
+                            <f:ajax execute="@form" listener="#{nAsignadorView.cargarMateriasyDocentes}" render="panel" />
+                            <p:column>
+                                <h:outputText value="#{p.desc}" />
+                            </p:column>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="departamento" value="Departamento:" />
+                        <p:selectOneMenu id="departamento" value="#{nAsignadorView.departamento}" 
+                                         var="dp" converter="depaNAsig" style="width: 200px;">
+                            <f:selectItems value="#{nAsignadorView.departamentos}" var="depa" itemLabel="#{depa.desc}" itemValue="#{depa}" />
+                            <f:ajax execute="@form" listener="#{nAsignadorView.cargarMateriasyDocentes}" render="panel" />
+                            <p:column>
+                                <h:outputText value="#{dp.desc}" />
+                            </p:column>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="parcial" value="Parcial:" />         
+                        <p:selectOneMenu id="parcial" value="#{nAsignadorView.parcial}" var="pa" converter="parcialNAsig" style="width: 200px;">
+                            <f:selectItems value="#{nAsignadorView.parciales}" var="par" itemLabel="#{par.desc}" itemValue="#{par}" />
+                            <f:ajax execute="@form" listener="#{nAsignadorView.cargarReporte}" render="messages" />
+                            <p:column>
+                                <h:outputText value="#{pa.desc}" />
+                            </p:column>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="materia" value="Materia:" />
+                        <p:selectOneListbox id="materia" value="#{nAsignadorView.materia}"  
+                                            var="m" converter="mateNAsig" style="width: 100%;" filter="true" filterMatchMode="contains">
+                            <f:selectItems value="#{nAsignadorView.materias}" var="mat" itemLabel="#{mat.titulo}" itemValue="#{mat}" />
+                            <f:ajax execute="@form" listener="#{nAsignadorView.cargarReporte}" render="messages" />
+                            <p:column>
+                                <h:outputText value="#{m.titulo}" />
+                            </p:column>         
+                        </p:selectOneListbox>
+
+                        <p:outputLabel for="docente" value="Docente:" />
+                        <p:selectOneListbox id="docente" value="#{nAsignadorView.docente}" var="d" converter="docenteNAsig" style="width: 100%;" filter="true" filterMatchMode="contains">
+                            <f:selectItems value="#{nAsignadorView.docentes}" var="docen" itemLabel="#{docen.nombre}" itemValue="#{docen}" />
+                            <p:column>
+                                <h:outputText value="#{d.nombre}" />
+                            </p:column>
+                        </p:selectOneListbox>
+                    </h:panelGrid>
+
+                    <p:separator />
+
+                    <p:commandButton value="Aceptar" 
+                                     update="display" icon="ui-icon-check" 
+                                     oncomplete="PF('dlg').show()"/>
+
+                    <p:dialog modal="true" resizable="false" widgetVar="dlg" header="Reporte" showEffect="clip">
+                        <p:panelGrid columns="2" id="display" columnClasses="label,value">
+                            <h:outputText value="Rol:" />
+                            <h:outputText value="ASIGNADOR" />
+                            <h:outputText value="Periodo:" />
+                            <h:outputText value="#{nAsignadorView.periodo}" />
+                            <h:outputText value="Departamento:" />
+                            <h:outputText value="#{nAsignadorView.departamento}" />
+                            <h:outputText value="Parcial:" />
+                            <h:outputText value="#{nAsignadorView.parcial}" />
+                            <h:outputText value="Materia: " />
+                            <h:outputText value="#{nAsignadorView.materia}" />
+                            <h:outputText value="Docente:" />
+                            <h:outputText value="#{nAsignadorView.docente}" />
+                        </p:panelGrid>
+                        <p:commandButton value="Confirmar" 
+                                         update="panel" icon="ui-icon-check" 
+                                         action="#{nAsignadorView.guardar}"/>
+                        <p:commandButton update="panel" process="@this" icon="ui-icon-close" 
+                                         actionListener="#{nAsignadorView.reset}"
+                                         value="Cancelar"/>
+                    </p:dialog>
+                </p:panel>
+
+                <p:stack icon="/resources/icons/stack.png" expanded="true">
+                    <p:menuitem value="Inicio" icon="/resources/icons/home.png" action="index?faces-redirect=true"/>
+                </p:stack>
+            </h:form>
+        </p:layoutUnit>     
+    </h:body>
+</html>

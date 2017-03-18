@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>SPEEV</title>
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/images/indexStyle.css" type="text/css"/>
+    </h:head>
+    <h:body>
+        <p:layoutUnit id="content" position="center">
+            <h:graphicImage value="images/bann_2.jpg" width="100%" height="100"/>
+            <h:form id="form">
+                <p:panel id="panel" header="Sistema para elaboración de evaluaciones SPEEV">
+                    <h:panelGrid columns="1" cellpadding="5" styleClass="panelGridCenter">
+                        <p:commandButton action="Asignar?faces-redirect=true"
+                                         value="Asignar"></p:commandButton>
+                        <p:commandButton action="Crear?faces-redirect=true"
+                                         value="Crear"></p:commandButton>
+                        <p:commandButton action="Revisar?faces-redirect=true"
+                                         value="Revisar"></p:commandButton>
+                        <p:commandButton action="Receptor?faces-redirect=true"
+                                         value="Receptar"></p:commandButton>
+                    </h:panelGrid>
+                </p:panel>  
+                <p:stack icon="/images/icons/stack.png" expanded="true">
+                    <p:menuitem value="Inicio" icon="/images/icons/home.png" action="index?faces-redirect=true"/>
+                    <p:menuitem value="Administrador" icon="/images/icons/admin.png" action="NAsignador?faces-redirect=true"/>
+                </p:stack>
+            </h:form>
+        </p:layoutUnit>
+    </h:body>
+</html>
+

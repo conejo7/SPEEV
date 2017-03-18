@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <title>SPEEV</title>
+    </h:head>
+    <h:body>
+        <h:outputStylesheet library="css" name="globalStyle.css"  />
+        <p:layoutUnit id="content" position="center">
+            <p:panel id="basic"   style="margin-bottom:5px">
+                <h:panelGrid columns="2" cellpadding="2">
+                    <p:graphicImage value="resources/images/espe.jpg" width="80%" height="100" />
+                    <h:outputText value=" DEPARTAMENTO DE CIENCIAS HUMANAS Y SOCIALES" style="white-space: nowrap"/>                                                   
+                    <div style="white-space: nowrap" >
+                        <h:outputText value="TODAS LAS CARRERAS" style="padding-left: 100px"/>
+                    </div>                   
+                </h:panelGrid>
+            </p:panel>
+            <h:outputText value="SEGUNDA EVALUACIÓN  " style="padding-left: 100px" />            
+            <p:outputLabel value="SEMESTRE: ABRIL- AGOSTO 2016 " style="padding-left: 400px"  />
+            <p:separator /> 
+            <br>
+                <p><b><u>ATENCIÓN:</u></b> Señor estudiante, <b>ESTE EXAMEN ES SIN CONSULTA.</b>
+                    Escriba con letra clara y saltándose una línea en la hoja de cuadros,esto facilitará  la corrección de su examen.</p>
+            </br>
+            <p:separator /> 
+
+            <h:form id="form">
+                <p:growl id="msgs" showDetail="true" />
+
+                <p:dataTable var="car" value="#{dtSelectionView.preguntas_tabla}">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{car.id}" />
+                    </p:column>                  
+                    <p:column headerText="Enunciado">
+                        <h:outputText value="#{car.brand}" />
+                    </p:column>
+                     <p:column headerText="Puntaje">
+                        <h:outputText value="#{car.year}" />
+                    </p:column>
+                    <p:column headerText="Opciones">
+                        <h:outputText value="#{car.opci}" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+
+
+
+
+        </p:layoutUnit>
+    </h:body>
+
+</html>
